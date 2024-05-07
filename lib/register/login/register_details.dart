@@ -1,8 +1,8 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_practice/Services/firebase_auth_methods.dart';
-import 'package:flutter_practice/register/login/home_details.dart';
+
 import 'package:flutter_practice/register/login/login_details.dart';
+import 'package:provider/provider.dart';
 
 // ignore: must_be_immutable
 class Registeration extends StatefulWidget {
@@ -19,16 +19,13 @@ class _RegisterationState extends State<Registeration> {
 
   TextEditingController passwordController = TextEditingController();
 
-  FirebaseAuthMethods firebaseAuthMethods =
-      FirebaseAuthMethods(FirebaseAuth.instance);
-
   void signUpUser() async {
-    firebaseAuthMethods.signUpMethod(
-      fullname: fullNameController.text,
-      email: emailController.text,
-      password: passwordController.text,
-      context: context,
-    );
+    context.read<FirebaseAuthMethods>().signUpMethod(
+          fullname: fullNameController.text,
+          email: emailController.text,
+          password: passwordController.text,
+          context: context,
+        );
   }
 
   @override
@@ -105,7 +102,7 @@ class _RegisterationState extends State<Registeration> {
               ),
               ElevatedButton(
                 onPressed: () {
-                  signUpUser;
+                  signUpUser();
                 },
                 child: const Text("Register"),
               ),
